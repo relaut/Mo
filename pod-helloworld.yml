@@ -6,7 +6,8 @@ metadata:
    app: helloworld
    version: v.2
 spec:
- containers:
+
+containers:
    - name: moksh
      image: nadpereira/relautimages:mo.v.2
      ports:
