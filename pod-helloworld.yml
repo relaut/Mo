@@ -6,11 +6,11 @@ metadata:
    app: helloworld
    version: v.2
 spec:
-imagePullSecrets:
-  - name: private-registry-key
-containers:
-   - name: moksh
-     image: nadpereira/relautimages:mo.v.2
-     ports:
-     - name: nodejs-port
-       containerPort: 3000
+ imagePullSecrets:
+ - name: private-registry-key
+ containers:
+  - name: moksh
+    image: nadpereira/relautimages:mo.v.2
+    ports:
+    - name: nodejs-port
+      containerPort: 3000
