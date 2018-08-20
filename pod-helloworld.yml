@@ -7,8 +7,9 @@ metadata:
    version: v.1
 spec:
  containers:
-   – name: moksh
+   - name: moksh
      image: nadpereira/relautimages:mo.v.1
      ports:
-       – containerPort: 3000
+     - name: nodejs-port
+       containerPort: 3000
  
