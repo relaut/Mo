@@ -1,15 +1,16 @@
-apiVersion: v1
+apiVersion: v2
 kind: Pod
 metadata:
  name: mo-helloworld
  labels:
    app: helloworld
-   version: v.1
+   version: v.2
 spec:
  containers:
    - name: moksh
-     image: nadpereira/relautimages:mo.v.1
+     image: nadpereira/relautimages:mo.v.2
      ports:
      - name: nodejs-port
        containerPort: 3000
- 
+imagePullSecrets:
+  - name:  private-registry-key
