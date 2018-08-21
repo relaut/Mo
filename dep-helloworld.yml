@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      imagePullSecrets:
+      - name: private-registry-key
+      containers:
+      - name: mo-demo
+        image: nadpereira/relautimages:mo.v.1
+        ports:
+        - name: nodejs-port
+          containerPort: 3000
