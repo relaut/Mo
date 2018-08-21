@@ -4,13 +4,13 @@ metadata:
  name: mo-helloworld
  labels:
    app: helloworld
-   version: v.1
+   version: v.2
 spec:
  imagePullSecrets:
  - name: private-registry-key
  containers:
   - name: moksh
-    image: nadpereira/relautimages:mo.v.1
+    image: nadpereira/relautimages:mo.v.2
     ports:
     - name: nodejs-port
       containerPort: 3000
