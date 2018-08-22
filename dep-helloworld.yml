@@ -4,7 +4,7 @@ metadata:
   name: helloworld-deployment
   labels:
    app: helloworld
-   version: v.1
+   version: v.2
 spec:
   selector:
    matchLabels:
@@ -19,13 +19,13 @@ spec:
       - name: private-registry-key
       containers:
       - name: mo-demo
-        image: nadpereira/relautimages:mo.v.1
+        image: nadpereira/relautimages:mo.v.2
         ports:
         - name: nodejs-port
           containerPort: 3000
         livenessProbe:
          httpGet:
           path: /
-          port: 3000
+          port: nodejs-port
          initialDelaySeconds: 15
          timeoutSeconds: 30
