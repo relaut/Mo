@@ -30,7 +30,7 @@
           - envFrom:
               - configMapRef:
                   name: helloworld-demo-config
-            image: 'index.docker.io/nadpereira/relautimages:mo.v.1'
+            image: 'index.docker.io/nadpereira/relautimages:mo.v.2'
             name: primary
             ports:
               - containerPort: 3000
@@ -41,6 +41,8 @@
 - apiVersion: v1
   kind: Service
   metadata:
+    labels:
+      app: helloworld
     name: helloworld-demo-loadbalancer
     namespace: default
   spec:
@@ -55,6 +57,8 @@
 - apiVersion: extensions/v1beta1
   kind: Ingress
   metadata:
+    labels:
+      app: helloworld
     name: helloworld-demo-ingress
     namespace: default
   spec:
