@@ -1,61 +1,53 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: helloworld-deployment-config
-  namespace: spinnaker
-data:
-  NEW_FEATURE: "true"
-  
-  ---
-  
-apiVersion: apps/v1beta2
-kind: Deployment
-metadata:
-  name: helloworld-deployment
-  namespace: spinnaker
-  labels:
-   app: helloworld
-   version: v.2
-   stack: frontend
-spec:
-  selector:
-   matchLabels:
-    app: helloworld  
-  replicas: 3
-  template:
-    metadata:
-      namespace: spinnaker
-      labels:
-        app: helloworld
-    spec:
-      containers:
-      - name: mo-demo
-        image: nadpereira/relautimages:mo.v.2
-        ports:
-        - name: nodejs-port
-          containerPort: 3000
-        livenessProbe:
-         httpGet:
-          path: /
-          port: nodejs-port
-         initialDelaySeconds: 15
-         timeoutSeconds: 30
-        envFrom:
-        - configMapRef:
-            name: helloworld-deployment-config
-     
-     ---
-     
-kind: Service
-apiVersion: v1
-metadata:
-  name: helloworld-deployment
-  namespace: default
-spec:
-  selector:
-    source: demo
-    app: spinnaker
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+- apiVersion: v1
+  data:
+    NEW_FEATURE: 'true'
+  kind: ConfigMap
+  metadata:
+    name: spinnaker-demo-config
+    namespace: default
+- apiVersion: apps/v1beta2
+  kind: Deployment
+  metadata:
+    labels:
+      app: spinnaker
+      source: demo
+      stack: frontend
+    name: spinnaker-demo
+    namespace: default
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        app: spinnaker
+        source: demo
+    template:
+      metadata:
+        labels:
+          app: spinnaker
+          source: demo
+      spec:
+        containers:
+          - envFrom:
+              - configMapRef:
+                  name: spinnaker-demo-config
+            image: 'index.docker.io/nadpereira/relautimages:mo.v.2'
+            name: primary
+            ports:
+              - containerPort: 3000
+            readinessProbe:
+              httpGet:
+                path: /
+                port: 3000
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: spinnaker-demo
+    namespace: default
+  spec:
+    ports:
+      - port: 80
+        protocol: TCP
+        targetPort: 3000
+    selector:
+      app: spinnaker
+      source: demo
