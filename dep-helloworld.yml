@@ -3,33 +3,33 @@
     NEW_FEATURE: 'true'
   kind: ConfigMap
   metadata:
-    name: spinnaker-demo-config
+    name: helloworld-demo-config
     namespace: default
 - apiVersion: apps/v1beta2
   kind: Deployment
   metadata:
     labels:
-      app: spinnaker
+      app: helloworld
       source: demo
       stack: frontend
-    name: spinnaker-demo
+    name: helloworld-demo-deployment
     namespace: default
   spec:
     replicas: 3
     selector:
       matchLabels:
-        app: spinnaker
+        app: helloworld
         source: demo
     template:
       metadata:
         labels:
-          app: spinnaker
+          app: helloworld
           source: demo
       spec:
         containers:
           - envFrom:
               - configMapRef:
-                  name: spinnaker-demo-config
+                  name: helloworld-demo-config
             image: 'index.docker.io/nadpereira/relautimages:mo.v.2'
             name: primary
             ports:
@@ -41,13 +41,27 @@
 - apiVersion: v1
   kind: Service
   metadata:
-    name: spinnaker-demo
+    name: helloworld-demo-loadbalancer
     namespace: default
   spec:
     ports:
-      - port: 80
-        protocol: TCP
-        targetPort: 3000
+     - port: 80
+       protocol: TCP
+       targetPort: 3000
     selector:
-      app: spinnaker
+      app: helloworld
       source: demo
+
+- apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    name: helloworld-demo-ingress
+    namespace: ingress-nginx
+  spec:
+    rules:
+    - host: moapp.mospin.resistance.mnstr.io
+      http:
+        paths:
+        - backend:
+            serviceName: helloworld-demo-loadbalancer
+            servicePort: 80
