@@ -5,17 +5,17 @@
       app: helloworld
       source: demo
     name: helloworld-demo
-    namespace: helloworld
+    namespace: default
   spec:
     replicas: 3
     selector:
       matchLabels:
-        app: spinnaker
+        app: helloworld
         source: demo
     template:
       metadata:
         labels:
-          app: spinnaker
+          app: helloworld
           source: demo
       spec:
         containers:
@@ -31,7 +31,7 @@
   kind: Service
   metadata:
     name: helloworld-demo
-    namespace: helloworld
+    namespace: default
   spec:
     ports:
       - port: 80
