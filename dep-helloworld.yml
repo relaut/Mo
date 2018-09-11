@@ -2,7 +2,7 @@
   kind: Deployment
   metadata:
     labels:
-      app: helloworld
+      app: helloworld-app
       source: demo
     name: helloworld-demo
     namespace: default
@@ -10,12 +10,12 @@
     replicas: 3
     selector:
       matchLabels:
-        app: helloworld
+        app: helloworld-app
         source: demo
     template:
       metadata:
         labels:
-          app: helloworld
+          app: helloworld-app
           source: demo
       spec:
         containers:
@@ -38,5 +38,5 @@
         protocol: TCP
         targetPort: 3000
     selector:
-      app: helloworld
+      app: helloworld-app
       source: demo
