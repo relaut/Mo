@@ -30,7 +30,7 @@
           - envFrom:
               - configMapRef:
                   name: helloworld-demo-config
-            image: 'index.docker.io/nadpereira/relautimages:mo.v.2'
+            image: 'index.docker.io/nadpereira/relautimages:mo.v.3'
             name: prime
             ports:
               - containerPort: 3000
